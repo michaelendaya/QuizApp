@@ -24,9 +24,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class DetailsFragment extends Fragment implements View.OnClickListener {
 
     private NavController navController;
@@ -40,6 +38,8 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
     private TextView detailsQuestions;
 
     private Button detailsStartBtn;
+    private String quizId;
+    private long totalQuestions = 0;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -92,6 +92,9 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
                 detailsDiff.setText(quizListModels.get(position).getLevel());
                 detailsQuestions.setText(quizListModels.get(position).getQuestions()+""); //value is in long so appended with nothing to make it string
 
+                //assign value to quiz id variable
+                quizId = quizListModels.get(position).getQuiz_id();
+                totalQuestions = quizListModels.get(position).getQuestions();
 
             }
         });
@@ -102,10 +105,10 @@ public class DetailsFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.details_start_btn:
                 DetailsFragmentDirections.ActionDetailsFragmentToQuizFragment action = DetailsFragmentDirections.actionDetailsFragmentToQuizFragment();
-                action.setPosition(position);
+                action.setTotalQuestions(totalQuestions);
+                action.setQuizId(quizId);
                 navController.navigate(action);
                 break;
         }
     }
 }
-
